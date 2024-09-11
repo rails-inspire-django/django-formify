@@ -1,0 +1,5 @@
+{% if field.label and formify_helper.form_show_labels %}
+  <label for="{{ field.id_for_label }}" class="{{ formify_helper.label_class }}">
+    {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+  </label>
+{% endif %}

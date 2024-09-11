@@ -1,0 +1,16 @@
+{% load viewcomponent_tags %}
+
+{% component formify_helper.field_wrapper_component as field_component %}
+  {% call field_component.label %}
+    {% include 'formify/tailwind/label.html' %}
+  {% endcall %}
+
+  {% call field_component.input %}
+    {{ field_html }}
+  {% endcall %}
+
+  {% call field_component.field_helper_text_and_errors %}
+    {% include 'formify/tailwind/help_text_and_errors.html' %}
+  {% endcall %}
+
+{% endcomponent %}

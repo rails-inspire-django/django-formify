@@ -1,0 +1,6 @@
+<fieldset {% if self.dom_id %}id="{{ self.dom_id }}"{% endif %}
+    {% if self.css_class %}class="{{ self.css_class }}"{% endif %}
+    {{ self.flat_attrs }}>
+    {% if self.legend %}<legend>{{ self.legend|safe }}</legend>{% endif %}
+    {{ self.fields_html|safe }}
+</fieldset>

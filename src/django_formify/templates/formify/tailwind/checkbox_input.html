@@ -1,0 +1,19 @@
+{% load viewcomponent_tags %}
+
+{% component formify_helper.field_wrapper_component as field_component %}
+  {% call field_component.label %}
+  {% endcall %}
+
+  {% call field_component.input %}
+    <label for="{{ field.id_for_label }}" class="inline-flex items-center gap-2 text-gray-700">
+      {{ field_html }}
+      {% comment %}line break here would cause extra white space around the checkbox{% endcomment %}
+      {{ field.label|safe }}
+    </label>
+  {% endcall %}
+
+  {% call field_component.field_helper_text_and_errors %}
+    {% include 'formify/tailwind/help_text_and_errors.html' %}
+  {% endcall %}
+
+{% endcomponent %}

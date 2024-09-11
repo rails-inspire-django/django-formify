@@ -1,0 +1,7 @@
+{% if formify_helper.form_show_errors and field.errors %}
+  <div class="mt-1">
+    {% for error in field.errors %}
+        <p id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="text-red-600 text-xs">{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}

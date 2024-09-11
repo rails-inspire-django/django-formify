@@ -1,0 +1,3 @@
+{% load l10n %}
+
+<option value="{{ option.value|stringformat:'s' }}" {% include "formify/tailwind/attrs.html" with widget=option %} >{{ option.label }}</option>

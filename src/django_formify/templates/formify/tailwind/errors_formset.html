@@ -1,0 +1,9 @@
+{% if formset.non_form_errors and formify_helper.form_show_errors %}
+  <div class="mb-4 formset-non-form-errors">
+    <div class="py-3 px-4 bg-red-50 text-red-600 rounded-lg border border-red-300">
+      <ul>
+        {{ formset.non_form_errors|unordered_list }}
+      </ul>
+    </div>
+  </div>
+{% endif %}

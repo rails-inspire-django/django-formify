@@ -1,0 +1,28 @@
+{% load l10n formify %}
+
+{% component formify_helper.field_wrapper_component as field_component %}
+  {% call field_component.label %}
+    {% include 'formify/tailwind/label.html' %}
+  {% endcall %}
+
+  {% call field_component.input %}
+    <div {% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+      <div class="relative">
+        <select class="bg-white focus:outline-none border {% if field.errors %}{{ formify_helper.error_border }} {% else %}border-gray-300 {% endif %}rounded-lg py-2 px-4 block w-full appearance-none leading-normal text-gray-700" name="{{ field.html_name }}" {{ field|build_attrs }}>
+          {% for group, options, index in field|optgroups %}
+            {% if group %}<optgroup label="{{ group }}">{% endif %}
+          {% for option in options %}
+            {% include "formify/tailwind/select_option.html" %}
+          {% endfor %}
+          {% if group %}</optgroup>{% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  {% endcall %}
+
+  {% call field_component.field_helper_text_and_errors %}
+    {% include 'formify/tailwind/help_text_and_errors.html' %}
+  {% endcall %}
+
+{% endcomponent %}
