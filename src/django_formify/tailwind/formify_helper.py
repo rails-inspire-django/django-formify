@@ -33,7 +33,7 @@ class FormifyHelper:
     # and access them in template via formify_helper.xxx
     form_show_errors = True
     form_show_labels = True
-    field_wrapper_class = "mb-3"
+    field_wrapper_class = "field-wrapper mb-3"
     # this is the component used to render the label, field input and error messages
     field_wrapper_component = "formify.tw.field_wrapper"
     field_class = "form-control"
