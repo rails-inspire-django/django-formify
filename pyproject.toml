@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "django-formify"
-version = "0.0.2"
-description = ""
+version = "0.0.3"
+description = "Django-Formify is designed to enhance the styling and rendering of forms within your Django projects"
 authors = ["Michael Yin <michaelyin@accordbox.com>"]
 license = "MIT"
 homepage = "https://github.com/rails-inspire-django/django-formify"
@@ -14,7 +14,7 @@ Changelog = "https://github.com/rails-inspire-django/django-formify/releases"
 [tool.poetry.dependencies]
 python = ">=3.8"
 django = ">=3.0"
-django-viewcomponent = ">=1.0.7"
+django-viewcomponent = ">=1.0.8"
 
 [tool.poetry.dev-dependencies]
 
