@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-formify"
-version = "0.0.3"
+version = "0.0.4"
 description = "Django-Formify is designed to enhance the styling and rendering of forms within your Django projects"
 authors = ["Michael Yin <michaelyin@accordbox.com>"]
 license = "MIT"
