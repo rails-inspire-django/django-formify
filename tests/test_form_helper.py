@@ -26,7 +26,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_text_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_email_field(self, mocker):
         mock_email_input = mocker.spy(FormifyHelper, "email_input")
@@ -40,7 +40,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_email_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_integer_field(self, mocker):
         mock_number_input = mocker.spy(FormifyHelper, "number_input")
@@ -54,7 +54,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_number_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_float_field(self, mocker):
         mock_number_input = mocker.spy(FormifyHelper, "number_input")
@@ -68,7 +68,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_number_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_boolean_field(self, mocker):
         mock_checkbox_input = mocker.spy(FormifyHelper, "checkbox_input")
@@ -82,7 +82,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_checkbox_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_date_field(self, mocker):
         mock_date_input = mocker.spy(FormifyHelper, "date_input")
@@ -96,7 +96,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_date_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_time_field(self, mocker):
         mock_time_input = mocker.spy(FormifyHelper, "time_input")
@@ -110,7 +110,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_time_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_datetime_field(self, mocker):
         mock_date_time_input = mocker.spy(FormifyHelper, "date_time_input")
@@ -124,7 +124,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_date_time_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_choice_field(self, mocker):
         mock_select = mocker.spy(FormifyHelper, "select")
@@ -138,7 +138,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_select.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_choice_radio_field(self, mocker):
         mock_radio_select = mocker.spy(FormifyHelper, "radio_select")
@@ -152,7 +152,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_radio_select.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_select_multiple(self, mocker):
         mock_select_multiple = mocker.spy(FormifyHelper, "select_multiple")
@@ -166,7 +166,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_select_multiple.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_checkbox_select_multiple(self, mocker):
         mock_checkbox_select_multiple = mocker.spy(
@@ -182,7 +182,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_checkbox_select_multiple.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_file_field(self, mocker):
         mock_clearable_file_input = mocker.spy(FormifyHelper, "clearable_file_input")
@@ -196,7 +196,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_clearable_file_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_image_field(self, mocker):
         mock_clearable_file_input = mocker.spy(FormifyHelper, "clearable_file_input")
@@ -210,7 +210,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_clearable_file_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_url_field(self, mocker):
         mock_url_input = mocker.spy(FormifyHelper, "url_input")
@@ -224,7 +224,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_url_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_regex_field(self, mocker):
         mock_text_input = mocker.spy(FormifyHelper, "text_input")
@@ -238,7 +238,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_text_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_hidden_field(self):
         template = Template(
@@ -262,7 +262,7 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_text_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
     def test_render_password_input_field(self, mocker):
         mock_text_input = mocker.spy(FormifyHelper, "password_input")
@@ -276,14 +276,14 @@ class TestDefaultFormifyHelper:
         html = template.render(Context({"form": AllFieldsForm()}))
 
         mock_text_input.assert_called_once()
-        assert_select(html, ".form-group", 1)
+        assert_select(html, ".field-wrapper", 1)
 
 
 class TestFormFormifyHelper:
     def test_custom_formify_helper(self):
         helper = FormifyHelper()
         helper.form_show_errors = False
-        helper.field_wrapper_class = "another-form-group"
+        helper.field_wrapper_class = "another-field-wrapper"
 
         template = Template(
             """
@@ -299,8 +299,8 @@ class TestFormFormifyHelper:
         c = Context({"testForm": form})
         html = template.render(c)
 
-        assert_select(html, ".form-group", 0)
-        assert_select(html, ".another-form-group")
+        assert_select(html, ".field-wrapper", 0)
+        assert_select(html, ".another-field-wrapper")
         assert_select(html, ".form-non-field-errors", 0)
 
     def test_override_in_field(self):
@@ -325,5 +325,5 @@ class TestFormFormifyHelper:
         c = Context({"testForm": form})
         html = template.render(c)
 
-        assert_select(html, ".form-group")
+        assert_select(html, ".field-wrapper")
         assert_select(html, "label", 1)
