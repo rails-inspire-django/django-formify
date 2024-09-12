@@ -1,7 +1,7 @@
 django-formify
 =====================
 
-A set of tools to help simplify your Django templates.
+Django-Formify is designed to enhance the styling and rendering of forms within your Django projects
 
 Topics
 ------
@@ -9,4 +9,7 @@ Topics
 .. toctree::
    :maxdepth: 2
 
-   getting_started.md
+   install.md
+   get_started.md
+   formify_helper.md
+   layout.md
