@@ -8,6 +8,7 @@ Unlike other form rendering packages, below template tags
 {% render_form %}
 {% render_submit %}
 {% render_field %}
+{% render_form_errors %}
 ```
 
 Just accept arguments from the templates, and pass the arguments to the `formify_helper` to render them.
@@ -36,6 +37,7 @@ Leveraging Python OOP, you can override some methods of the formify helper to cu
 {% render_form %}            -> formify_helper.render_form
 {% render_submit %}          -> formify_helper.render_submit
 {% render_field %}           -> formify_helper.render_field
+{% render_form_errors %}     -> formify_helper.render_form_errors
 ```
 
 ## Field Dispatcher
@@ -54,7 +56,7 @@ Notes:
 1. If `text_input` method is not found in the `formify_helper` instance, `fallback` method will be used to render the field.
 2. This can help developers to control rendering behavior of the specific widgets.
 
-If you have built some custom widgets, just add a method to the `formify_helper` and make it look well, this is much cleaner.
+If you have built some custom widgets, just add a method to the `formify_helper` and make the final result look well, this is much cleaner.
 
 ## Formify Helper Variables
 

@@ -1,5 +1,7 @@
 # Get Started
 
+## Simple Form Rendering
+
 Let's assume you already have Django forms.
 
 To render the form with good style in the template

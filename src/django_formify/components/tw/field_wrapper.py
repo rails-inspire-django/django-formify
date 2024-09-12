@@ -13,4 +13,10 @@ class FieldWrapperComponent(component.Component):
 
 @component.register("formify.tw.horizontal_field_wrapper")
 class HorizontalFieldWrapperComponent(FieldWrapperComponent):
+    """
+    The css classes are hard coded in this component.
+
+    But you can also set them in the formify_helper instance and get them in the template using formify_helper.xxx
+    """
+
     template_name = "formify/tailwind/components/horizontal_field_wrapper.html"
