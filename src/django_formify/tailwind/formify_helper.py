@@ -29,8 +29,10 @@ class CSSContainer:
 
 
 class FormifyHelper:
-    # Developers can override these settings in their own FormifyHelper class
-    # and access them in template via formify_helper.xxx
+    """
+    Developers can override these settings in their own FormifyHelper class
+    and access them in template via formify_helper.xxx
+    """
 
     ################################################################################
     # field wrapper
