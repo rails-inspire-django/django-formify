@@ -11,25 +11,19 @@
 
 </div>
 
-```html
-{% load formify %}
-
-<form method="post">
-
-    {% csrf_token %}
-
-    {% render_form form %}
-
-    {% render_submit text='Hello Formify!' variant="primary" %}
-
-</form>
-```
+![Django Formify Code](.github/assets/code.png)
 
 ![Django Formify Demo](.github/assets/formify-demo.jpg)
 
 ## Documentation
 
+[Documentation](https://django-formify.readthedocs.io/)
+
 ## FAQ
 
 ### Django-Formify vs Crispy-Tailwind
 
+1. Django-Formify is a fork of Crispy-Tailwind, the core logic is the same.
+2. Django-Formify changed the way of rendering, to make it more flexible and easy to customize.
+3. Django-Formify import components from Django-ViewComponent, which makes the components more reusable and easy to maintain. Developers can also create their own components to fit their needs.
+4. Django-Formify updated some widgets such as file input to make them look better with Tailwind CSS.
