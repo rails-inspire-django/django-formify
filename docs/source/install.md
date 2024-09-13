@@ -14,7 +14,9 @@ INSTALLED_APPS = [
 ]
 ```
 
-`django_formify` has some components build by `django_viewcomponent`, to make it work, please also update `TEMPLATES` by following the instruction below.
+```{note}
+`django_formify` contains some components build using `django_viewcomponent`, to make it work, please also update `TEMPLATES` by following the instruction below.
+```
 
 Modify `TEMPLATES` section of settings.py as follows:
 
