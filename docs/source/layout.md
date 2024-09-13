@@ -117,16 +117,13 @@ What is more, after creating `Accordion` component, you can also use them in nor
 
 Some people might have heard of a horizontal form, where the field labels and fields are arranged side by side
 
-To make it work, please check below code
+To make it work, please use below code
 
 ```python
 form.formify_helper = FormifyHelper()
 form.formify_helper.field_wrapper_class = "md:flex md:items-center mb-6"
-form.formify_helper.field_wrapper_component = (
-    "formify.tw.horizontal_field_wrapper"
-)
+form.formify_helper.label_container_class = "md:w-1/3"
+form.formify_helper.field_container_class = "md:w-2/3"
 ```
-
-`formify.tw.horizontal_field_wrapper` is a Component (built on django-viewcomponent) for horizontal layout, it can add css classes to the `label` and `field` to make them display side by side.
 
 ![](./images/horizontal_form.jpg)
