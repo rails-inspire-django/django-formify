@@ -3,7 +3,7 @@
 
 {% component formify_helper.field_wrapper_component as field_component %}
   {% call field_component.label %}
-    {% include 'formify/tailwind/label.html' %}
+    {% component formify_helper.label_component field=field formify_helper=formify_helper %}{% endcomponent %}
   {% endcall %}
 
   {% call field_component.input %}
@@ -18,7 +18,7 @@
   {% endcall %}
 
   {% call field_component.field_helper_text_and_errors %}
-    {% include 'formify/tailwind/help_text_and_errors.html' %}
+    {% component formify_helper.field_error_help_text_component field=field formify_helper=formify_helper %}{% endcomponent %}
   {% endcall %}
 
 {% endcomponent %}

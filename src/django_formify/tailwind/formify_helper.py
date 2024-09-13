@@ -74,6 +74,8 @@ class FormifyHelper:
     ################################################################################
     # label
     ################################################################################
+    form_show_labels = True
+    label_component = "formify.tw.field_label"
     label_container_class = ""
     label_class = "label-class block text-gray-900 mb-2"
 
@@ -81,7 +83,9 @@ class FormifyHelper:
     # other
     ################################################################################
     form_show_errors = True
-    form_show_labels = True
+    field_error_help_text_component = "formify.tw.field_error_help_text"
+    field_help_text_component = "formify.tw.field_help_text"
+    field_error_component = "formify.tw.field_error"
 
     form = None
 
