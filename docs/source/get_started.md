@@ -86,4 +86,4 @@ If you want more control of the form layout, you can render fields manually.
 
 Notes:
 
-You can use `{% render_field form.email %}` to render specific form field.
+1. You can use `{% render_field form.email %}` to render specific form field.
