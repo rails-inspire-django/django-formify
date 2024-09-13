@@ -1,7 +1,7 @@
 django-formify
 =====================
 
-A set of tools to help simplify your Django templates.
+Django-Formify seamlessly integrates Tailwind CSS styles into your Django forms for a sleek, modern look.
 
 Topics
 ------
@@ -9,4 +9,7 @@ Topics
 .. toctree::
    :maxdepth: 2
 
-   getting_started.md
+   install.md
+   get_started.md
+   formify_helper.md
+   layout.md

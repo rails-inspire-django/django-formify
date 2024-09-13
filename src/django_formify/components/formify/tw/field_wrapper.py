@@ -8,9 +8,4 @@ class FieldWrapperComponent(component.Component):
     input = RendersOneField()
     field_helper_text_and_errors = RendersOneField()
 
-    template_name = "formify/tailwind/components/field_wrapper.html"
-
-
-@component.register("formify.tw.horizontal_field_wrapper")
-class HorizontalFieldWrapperComponent(FieldWrapperComponent):
-    template_name = "formify/tailwind/components/horizontal_field_wrapper.html"
+    template_name = "formify/tw/field_wrapper.html"

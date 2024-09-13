@@ -64,13 +64,13 @@ class HTML(component.Component):
 
 class Button(component.Component):
     template_name = "formify/tailwind/components/button.html"
-    field_classes = "btn btn-primary"
+    default_css_class = "btn btn-primary"
     button_type = "button"
 
     def __init__(self, text=None, dom_id=None, css_class=None, template=None, **kwargs):
         self.text = text if text else "Button"
         self.dom_id = dom_id
-        self.field_classes = css_class or self.field_classes
+        self.css_class = css_class or self.default_css_class
         self.template_name = template or self.template_name
         self.flat_attrs = flatatt(kwargs)
 
