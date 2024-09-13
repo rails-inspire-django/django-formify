@@ -11,6 +11,7 @@ Topics
 
    install.md
    get_started.md
+   tags.md
    formify_helper.md
    layout.md
    component_design.md
