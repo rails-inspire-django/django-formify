@@ -1,3 +1,5 @@
 {% if self.should_render %}
-  <small {% if self.field.id_for_label %}id="{{ self.field.id_for_label }}_helptext" {% endif %}class="text-gray-600">{{ self.field.help_text|safe }}</small>
+  <div class="mt-1">
+    <small {% if self.field.id_for_label %}id="{{ self.field.id_for_label }}_helptext" {% endif %} class="text-gray-600">{{ self.field.help_text|safe }}</small>
+  </div>
 {% endif %}
