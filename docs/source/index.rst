@@ -1,7 +1,7 @@
 django-formify
 =====================
 
-Django-Formify seamlessly integrates Tailwind CSS styles into your Django forms for a sleek, modern look.
+Django-Formify seamlessly integrates Tailwind CSS styles into your Django forms for a modern look.
 
 Topics
 ------
