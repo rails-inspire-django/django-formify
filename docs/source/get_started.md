@@ -24,7 +24,7 @@ To render the form with good style in the template
 
     {% render_form form %}
     
-    {% render_submit text='Submit' css_class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %}
+    {% render_submit text='Hello Formify!' css_class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %}
     
   </form>
 </div>
