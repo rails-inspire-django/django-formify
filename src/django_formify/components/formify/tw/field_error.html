@@ -1,0 +1,7 @@
+{% if self.should_render %}
+  <div class="mt-1">
+    {% for error in self.field.errors %}
+        <p id="error_{{ forloop.counter }}_{{ self.field.auto_id }}" class="text-red-600 text-xs">{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endif %}

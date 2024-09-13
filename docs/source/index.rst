@@ -1,7 +1,7 @@
 django-formify
 =====================
 
-Django-Formify is designed to enhance the styling and rendering of forms within your Django projects
+Django-Formify seamlessly integrates Tailwind CSS styles into your Django forms for a sleek, modern look.
 
 Topics
 ------
@@ -13,3 +13,4 @@ Topics
    get_started.md
    formify_helper.md
    layout.md
+   component_design.md
