@@ -25,5 +25,5 @@
 
 1. Django-Formify is a fork of Crispy-Tailwind, the core logic is the same.
 2. Django-Formify changed the way of rendering, to make it more flexible and easy to customize.
-3. Django-Formify import components from Django-ViewComponent, which makes the components more reusable and easy to maintain. Developers can also create their own components to fit their needs.
-4. Django-Formify updated some widgets such as file input to make them look better with Tailwind CSS.
+3. Django-Formify has components built using Django-ViewComponent, which makes the code more reusable and easy to maintain. Developers can also create their own components to fit their needs.
+4. Django-Formify updated styles of some widgets such as file input to make them look better with Tailwind CSS.
