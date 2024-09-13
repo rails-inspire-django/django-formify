@@ -1,5 +1,5 @@
 <button
-    class="{{ self.field_classes }}"
+    class="{{ self.css_class }}"
     type="{{ self.button_type }}"
     {% if self.id %}id="{{ self.id }}"{% endif %}
     {{ self.flat_attrs|safe }}

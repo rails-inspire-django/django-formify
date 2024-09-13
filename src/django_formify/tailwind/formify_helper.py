@@ -31,13 +31,21 @@ class CSSContainer:
 class FormifyHelper:
     # Developers can override these settings in their own FormifyHelper class
     # and access them in template via formify_helper.xxx
-    form_show_errors = True
-    form_show_labels = True
+
+    ################################################################################
+    # field wrapper
+    # field wrapper is a wrapper for label, field and error messages
+    ################################################################################
     field_wrapper_class = "field-wrapper mb-3"
     # this is the component used to render the label, field input and error messages
     field_wrapper_component = "formify.tw.field_wrapper"
-    field_class = "form-control"
-    label_class = "block text-gray-900 mb-2"
+
+    ################################################################################
+    # field
+    ################################################################################
+    field_container_class = ""
+
+    # if form validation fail, use this to replace border css class for some inputs
     error_border = "border-red-300"
 
     common_style = (
@@ -62,6 +70,18 @@ class FormifyHelper:
         # border-red-300
         "clearable_file_input": "w-full overflow-clip rounded-lg border border-red-300 bg-neutral-50/50 text-neutral-600 file:mr-4 file:cursor-pointer file:border-none file:bg-gray-50 file:px-4 file:py-2 file:font-medium file:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-neutral-700 dark:bg-neutral-900/50 dark:text-neutral-300 dark:file:bg-neutral-900 dark:file:text-white dark:focus-visible:outline-white",
     }
+
+    ################################################################################
+    # label
+    ################################################################################
+    label_container_class = ""
+    label_class = "label-class block text-gray-900 mb-2"
+
+    ################################################################################
+    # other
+    ################################################################################
+    form_show_errors = True
+    form_show_labels = True
 
     form = None
 
