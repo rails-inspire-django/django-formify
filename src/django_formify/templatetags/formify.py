@@ -94,11 +94,9 @@ class FormTagNode(Node):
         form = resolved_component_args[0]
         formify_helper = init_formify_helper_for_form(form)
         content = self.nodelist.render(context)
-
-        with context.push():
-            return formify_helper.render_form_tag(
-                context=context, content=content, **resolved_component_kwargs
-            )
+        return formify_helper.render_form_tag(
+            context=context, content=content, **resolved_component_kwargs
+        )
 
 
 @register.tag(name="form_tag")
