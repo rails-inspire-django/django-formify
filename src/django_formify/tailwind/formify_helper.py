@@ -155,19 +155,16 @@ class FormifyHelper:
         template = get_template("formify/tailwind/form_tag.html")
         return self.smart_render(template, context)
 
-    def render_formset(self, context, create_new_context=False):
+    def render_formset(self, context):
         """
         uni_formset.html
         """
-        if create_new_context:
-            context = self.get_context_data(context)
-
         # render formset management form fields
         management_form = self.formset.management_form
         management_form_helper = init_formify_helper_for_form(management_form)
-        management_form_html = management_form_helper.render_form(
-            management_form_helper.get_context_data(context)
-        )
+        with context.push():
+            update_context = management_form_helper.get_context_data(context)
+            management_form_html = management_form_helper.render_form(update_context)
 
         # render formset errors
         formset_errors = self.render_formset_errors(context)
@@ -175,17 +172,16 @@ class FormifyHelper:
         forms_html = ""
         for form in self.formset:
             form_helper = init_formify_helper_for_form(form)
-            forms_html += form_helper.render_form(form_helper.get_context_data(context))
+            with context.push():
+                update_context = form_helper.get_context_data(context)
+                forms_html += form_helper.render_form(update_context)
 
         return SafeString(management_form_html + formset_errors + forms_html)
 
-    def render_form(self, context, create_new_context=False):
+    def render_form(self, context):
         """
         uni_form.html
         """
-        if create_new_context:
-            context = self.get_context_data(context)
-
         return SafeString(
             self.render_form_errors(context) + self.render_form_fields(context)
         )
@@ -218,34 +214,31 @@ class FormifyHelper:
             dispatch_method_callable = helper.field_dispatch(field)
             return SafeString(dispatch_method_callable(context))
 
-    def render_submit(self, context, create_new_context=True, **kwargs):
+    def render_submit(self, context, **kwargs):
         """
         It would be called from the render_submit tag
 
         Here we use Submit component to render the submit button, you can also override this method and
         use Django's get_template and render methods to render the submit button
         """
-        if create_new_context:
-            context = self.get_context_data(context)
-
         css_class = kwargs.pop("css_class", None)
         text = kwargs.pop("text", None)
         submit_component = Submit(text=text, css_class=css_class, **kwargs)
-        return submit_component.render_from_parent_context(context)
+        with context.push():
+            update_context = self.get_context_data(context)
+            return submit_component.render_from_parent_context(update_context)
 
-    def render_formset_errors(self, context, create_new_context=False):
-        if create_new_context:
-            context = self.get_context_data(context)
+    def render_formset_errors(self, context):
+        template = get_template("formify/tailwind/errors_formset.html")
+        with context.push():
+            update_context = self.get_context_data(context)
+            return self.smart_render(template, update_context)
 
-        error_template = get_template("formify/tailwind/errors_formset.html")
-        return self.smart_render(error_template, context)
-
-    def render_form_errors(self, context, create_new_context=False):
-        if create_new_context:
-            context = self.get_context_data(context)
-
-        error_template = get_template("formify/tailwind/errors.html")
-        return self.smart_render(error_template, context)
+    def render_form_errors(self, context):
+        template = get_template("formify/tailwind/errors.html")
+        with context.push():
+            update_context = self.get_context_data(context)
+            return self.smart_render(template, update_context)
 
     ################################################################################
 
@@ -267,9 +260,10 @@ class FormifyHelper:
     def render_form_fields(self, context):
         if not self.layout:
             self.layout = self.build_default_layout()
-
-        # render_from_parent_context is a method from the viewcomponent class
-        return self.layout.render_from_parent_context(context)
+        with context.push():
+            update_context = self.get_context_data(context)
+            # render_from_parent_context is a method from the Component class
+            return self.layout.render_from_parent_context(update_context)
 
     def render_as_tailwind_field(self, context):
         """

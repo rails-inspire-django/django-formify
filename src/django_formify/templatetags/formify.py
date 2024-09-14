@@ -21,16 +21,12 @@ def render_form(context, form_or_formset):
         # formset
         formset = form_or_formset
         formify_helper = init_formify_helper_for_formset(formset)
-        return formify_helper.render_formset(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_formset(context)
     else:
         # form
         form = form_or_formset
         formify_helper = init_formify_helper_for_form(form)
-        return formify_helper.render_form(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_form(context)
 
 
 @register.simple_tag(takes_context=True)
@@ -39,16 +35,12 @@ def render_form_errors(context, form_or_formset):
         # formset
         formset = form_or_formset
         formify_helper = init_formify_helper_for_formset(formset)
-        return formify_helper.render_formset_errors(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_formset_errors(context)
     else:
         # form
         form = form_or_formset
         formify_helper = init_formify_helper_for_form(form)
-        return formify_helper.render_form_errors(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_form_errors(context)
 
 
 @register.simple_tag(takes_context=True)
@@ -66,7 +58,7 @@ def render_field(context, field, **kwargs):
 @register.simple_tag(takes_context=True)
 def render_submit(context, form=None, **kwargs):
     formify_helper = init_formify_helper_for_form(form)
-    return formify_helper.render_submit(Context(context.flatten()), **kwargs)
+    return formify_helper.render_submit(context, **kwargs)
 
 
 @register.filter
