@@ -48,9 +48,8 @@ def render_field(context, field, **kwargs):
     form = field.form
     formify_helper = init_formify_helper_for_form(form)
     return formify_helper.render_field(
+        context=context,
         field=field,
-        context=Context(context.flatten()),
-        create_new_context=True,
         **kwargs,
     )
 

@@ -104,14 +104,15 @@ class FormifyHelper:
 
     def get_context_data(self, context_data) -> Context:
         if isinstance(context_data, Context):
-            new_context = Context(context_data.flatten())
+            context = context_data
         else:
-            new_context = Context(context_data)
+            context = Context(context_data)
 
-        new_context["formify_helper"] = self
-        new_context["form"] = self.form
-        new_context["formset"] = self.formset
-        return new_context
+        context["formify_helper"] = self
+        context["form"] = self.form
+        context["formset"] = self.formset
+
+        return context
 
     def smart_render(self, template, context):
         # if template is django.template.base.Template, make sure context is a Context object
@@ -126,6 +127,7 @@ class FormifyHelper:
         else:
             # make sure the context is dict
             if isinstance(context, Context):
+                # convert to dict
                 context_for_render = context.flatten()
             else:
                 context_for_render = context
@@ -186,33 +188,25 @@ class FormifyHelper:
             self.render_form_errors(context) + self.render_form_fields(context)
         )
 
-    def render_field(self, field, context, create_new_context=False, **kwargs):
+    def render_field(self, context, field, **kwargs):
         """
         This method is to render specific field
         """
-        helper: FormifyHelper = self
+        field_formify_helper = copy.copy(self)
 
-        if create_new_context:
-            # create a new instance of FormifyHelper
-            field_helper = copy.copy(self)
+        # assign extra kwargs to formify_helper if needed
+        for key, value in kwargs.items():
+            setattr(field_formify_helper, key, value)
 
-            # assign extra kwargs to formify_helper
-            for key, value in kwargs.items():
-                setattr(field_helper, key, value)
+        with context.push():
+            context["field"] = field
 
-            context = field_helper.get_context_data(context)
-
-            helper = field_helper
-        else:
-            pass
-
-        context["field"] = field
-
-        if field.is_hidden:
-            return SafeString(field.as_widget())
-        else:
-            dispatch_method_callable = helper.field_dispatch(field)
-            return SafeString(dispatch_method_callable(context))
+            if field.is_hidden:
+                return SafeString(field.as_widget())
+            else:
+                dispatch_method_callable = field_formify_helper.field_dispatch(field)
+                update_context = field_formify_helper.get_context_data(context)
+                return SafeString(dispatch_method_callable(update_context))
 
     def render_submit(self, context, **kwargs):
         """
