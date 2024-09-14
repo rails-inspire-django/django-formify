@@ -11,21 +11,15 @@ from django_formify.utils import camel_to_snake, init_formify_helper_for_form
 
 
 class CSSContainer:
-    def __init__(self, css_styles, error_styles):
-        self.css_styles = css_styles.copy()
-        self.error_styles = error_styles.copy()
+    def __init__(self, css_styles):
+        for key, value in css_styles.items():
+            setattr(self, key, value)
 
-    def get_input_class(self, field):
+    def get_field_class(self, field):
         widget_cls = field.field.widget.__class__.__name__
         key = camel_to_snake(widget_cls)
-        css_classes = getattr(self, "css_styles", {}).get(key, "")
+        css_classes = getattr(self, key, "")
         return css_classes
-
-    def get_error_class(self, field):
-        widget_cls = field.field.widget.__class__.__name__
-        key = camel_to_snake(widget_cls)
-        error_classes = getattr(self, "error_styles", {}).get(key, "")
-        return error_classes
 
 
 class FormifyHelper:
@@ -66,12 +60,18 @@ class FormifyHelper:
         "time_input": common_style,
         "date_time_input": common_style,
         "clearable_file_input": "w-full overflow-clip rounded-lg border border-gray-300 bg-gray-50/50 text-gray-600 file:mr-4 file:cursor-pointer file:border-none file:bg-gray-50 file:px-4 file:py-2 file:font-medium file:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-gray-700 dark:bg-gray-900/50 dark:text-gray-300 dark:file:bg-gray-900 dark:file:text-white dark:focus-visible:outline-white",
+        "radio_select_option_label": "inline-flex items-center gap-2 text-gray-700",
+        "checkbox_label": "inline-flex items-center gap-2 text-gray-700",
     }
 
     default_error_styles = {
         # border-red-300
         "clearable_file_input": "w-full overflow-clip rounded-lg border border-red-300 bg-gray-50/50 text-gray-600 file:mr-4 file:cursor-pointer file:border-none file:bg-gray-50 file:px-4 file:py-2 file:font-medium file:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-75 dark:border-gray-700 dark:bg-gray-900/50 dark:text-gray-300 dark:file:bg-gray-900 dark:file:text-white dark:focus-visible:outline-white",
     }
+
+    css_container = None
+
+    error_css_container = None
 
     ################################################################################
     # label
@@ -96,10 +96,11 @@ class FormifyHelper:
     layout = None
 
     def __init__(self):
-        self.css_container = self.get_css_container()
+        self.prepare_css_container()
 
-    def get_css_container(self):
-        return CSSContainer(self.default_styles, self.default_error_styles)
+    def prepare_css_container(self):
+        self.css_container = CSSContainer(self.default_styles)
+        self.error_css_container = CSSContainer(self.default_error_styles)
 
     def get_context_data(self, context_data) -> Context:
         if isinstance(context_data, Context):
@@ -267,12 +268,11 @@ class FormifyHelper:
             # if class is not set, then add additional css classes
 
             # add default input class
-            css_container = self.css_container
-            css = " " + css_container.get_input_class(field)
+            css = " " + self.css_container.get_field_class(field)
             css_class += css
 
             if field.errors:
-                error_css = css_container.get_error_class(field)
+                error_css = self.error_css_container.get_field_class(field)
                 if error_css:
                     css_class = error_css
                 else:

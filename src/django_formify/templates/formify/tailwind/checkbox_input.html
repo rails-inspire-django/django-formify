@@ -5,7 +5,7 @@
   {% endcall %}
 
   {% call field_component.input %}
-    <label for="{{ field.id_for_label }}" class="inline-flex items-center gap-2 text-gray-700">
+    <label for="{{ field.id_for_label }}" class="{{ formify_helper.css_container.checkbox_label|default_if_none:'' }}">
       {{ field_html }}
       {% comment %}line break here would cause extra white space around the checkbox{% endcomment %}
       {{ field.label|safe }}
