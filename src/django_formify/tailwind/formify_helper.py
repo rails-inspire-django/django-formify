@@ -139,6 +139,22 @@ class FormifyHelper:
     # Rendering Methods
     ################################################################################
 
+    def render_form_tag(self, context, content, **kwargs):
+        context["form_content"] = content
+        attrs = {
+            "class": kwargs.pop("css_class", ""),
+            "method": kwargs.pop("method", "POST").upper(),
+        }
+        action = kwargs.pop("action", "")
+        if action:
+            attrs["action"] = action
+        for key, value in kwargs.items():
+            attrs[key] = value
+        context["attrs"] = attrs
+
+        template = get_template("formify/tailwind/form_tag.html")
+        return self.smart_render(template, context)
+
     def render_formset(self, context, create_new_context=False):
         """
         uni_formset.html
@@ -184,7 +200,7 @@ class FormifyHelper:
             # create a new instance of FormifyHelper
             field_helper = copy.copy(self)
 
-            # assign extra kwargs to field_helper
+            # assign extra kwargs to formify_helper
             for key, value in kwargs.items():
                 setattr(field_helper, key, value)
 

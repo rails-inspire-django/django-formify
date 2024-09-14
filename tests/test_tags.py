@@ -9,11 +9,60 @@ from .utils import assert_select
 pytestmark = pytest.mark.django_db
 
 
-def render(template, context):
-    return Template(template).render(Context(context))
-
-
 class TestBasic:
+    def test_form_tag(self):
+        template = Template(
+            """
+            {% load formify %}
+            {% with url='/' %}
+                {% form_tag form action=url %}
+                    {% render_form form %}
+                {% endform_tag %}
+            {% endwith %}
+            """
+        )
+        c = Context({"form": SampleForm()})
+        html = template.render(c)
+
+        assert_select(html, "form", 1)
+        assert_select(html, "form[method='POST']", 1)
+        assert_select(html, "form[action='/']", 1)
+
+    def test_form_tag_extra_kwargs(self):
+        template = Template(
+            """
+            {% load formify %}
+
+            {% with url='/' %}
+                {% form_tag form action=url data_test='test' novalidate=True %}
+                    {% render_form form %}
+                {% endform_tag %}
+            {% endwith %}
+            """
+        )
+        c = Context({"form": SampleForm()})
+        html = template.render(c)
+
+        assert_select(html, "form", 1)
+        assert_select(html, "form[method='POST']", 1)
+        assert_select(html, "form[action='/']", 1)
+        assert_select(html, "form[data-test='test']", 1)
+        assert_select(html, "form[novalidate]", 1)
+
+    def test_form_tag_with_include(self):
+        template = Template(
+            """
+            {% load formify %}
+
+            {% form_tag form %}
+                {% include 'test.html' %}
+            {% endform_tag %}
+            """
+        )
+        c = Context({"form": SampleForm()})
+        html = template.render(c)
+        assert "Hello" in html
+
     def test_render_field(self):
         template = Template(
             """
