@@ -28,6 +28,24 @@ class TestBasic:
         assert_select(html, "form[method='POST']", 1)
         assert_select(html, "form[action='/']", 1)
 
+        # should still work if do not pass in form
+        template = Template(
+            """
+            {% load formify %}
+            {% with url='/' %}
+                {% form_tag action=url %}
+                    {% render_form form %}
+                {% endform_tag %}
+            {% endwith %}
+            """
+        )
+        c = Context({"form": SampleForm()})
+        html = template.render(c)
+
+        assert_select(html, "form", 1)
+        assert_select(html, "form[method='POST']", 1)
+        assert_select(html, "form[action='/']", 1)
+
     def test_form_tag_extra_kwargs(self):
         template = Template(
             """
