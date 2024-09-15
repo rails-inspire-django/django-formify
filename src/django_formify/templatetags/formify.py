@@ -1,6 +1,9 @@
 from django import template
 from django.forms.formsets import BaseFormSet
+from django.template.base import Node, NodeList
 from django.template.context import Context
+from django.template.exceptions import TemplateSyntaxError
+from django.template.library import parse_bits
 from django.utils.safestring import mark_safe
 
 from django_formify.utils import flatatt as utils_flatatt
@@ -18,16 +21,12 @@ def render_form(context, form_or_formset):
         # formset
         formset = form_or_formset
         formify_helper = init_formify_helper_for_formset(formset)
-        return formify_helper.render_formset(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_formset(context)
     else:
         # form
         form = form_or_formset
         formify_helper = init_formify_helper_for_form(form)
-        return formify_helper.render_form(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_form(context)
 
 
 @register.simple_tag(takes_context=True)
@@ -36,16 +35,12 @@ def render_form_errors(context, form_or_formset):
         # formset
         formset = form_or_formset
         formify_helper = init_formify_helper_for_formset(formset)
-        return formify_helper.render_formset_errors(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_formset_errors(context)
     else:
         # form
         form = form_or_formset
         formify_helper = init_formify_helper_for_form(form)
-        return formify_helper.render_form_errors(
-            Context(context.flatten()), create_new_context=True
-        )
+        return formify_helper.render_form_errors(context)
 
 
 @register.simple_tag(takes_context=True)
@@ -53,22 +48,97 @@ def render_field(context, field, **kwargs):
     form = field.form
     formify_helper = init_formify_helper_for_form(form)
     return formify_helper.render_field(
+        context=context,
         field=field,
-        context=Context(context.flatten()),
-        create_new_context=True,
-        **kwargs
+        **kwargs,
     )
 
 
 @register.simple_tag(takes_context=True)
 def render_submit(context, form=None, **kwargs):
     formify_helper = init_formify_helper_for_form(form)
-    return formify_helper.render_submit(Context(context.flatten()), **kwargs)
+    return formify_helper.render_submit(context, **kwargs)
 
 
 @register.filter
 def flatatt(attrs):
     return mark_safe(utils_flatatt(attrs))
+
+
+class FormTagNode(Node):
+    def __init__(
+        self,
+        context_args,
+        context_kwargs,
+        nodelist: NodeList,
+    ):
+        self.context_args = context_args or []
+        self.context_kwargs = context_kwargs or {}
+        self.nodelist = nodelist
+
+    def __repr__(self):
+        return "<FormTagNode Contents: %r>" % (
+            getattr(
+                self, "nodelist", None
+            ),  # 'nodelist' attribute only assigned later.
+        )
+
+    def render(self, context: Context):
+        resolved_component_args = [
+            safe_resolve(arg, context) for arg in self.context_args
+        ]
+        resolved_component_kwargs = {
+            key: safe_resolve(kwarg, context)
+            for key, kwarg in self.context_kwargs.items()
+        }
+        form = resolved_component_args[0]
+        formify_helper = init_formify_helper_for_form(form)
+        content = self.nodelist.render(context)
+        return formify_helper.render_form_tag(
+            context=context, content=content, **resolved_component_kwargs
+        )
+
+
+@register.tag(name="form_tag")
+def do_form_tag(parser, token):
+    bits = token.split_contents()
+    tag_name = "form_tag"
+    tag_args, tag_kwargs = parse_bits(
+        parser=parser,
+        bits=bits,
+        params=[],
+        takes_context=False,
+        name=tag_name,
+        varargs=True,
+        varkw=[],
+        defaults=None,
+        kwonly=[],
+        kwonly_defaults=None,
+    )
+
+    if tag_name != tag_args[0].token:
+        raise RuntimeError(
+            f"Internal error: Expected tag_name to be {tag_name}, but it was {tag_args[0].token}"
+        )
+
+    if len(tag_args) != 2:
+        raise TemplateSyntaxError(
+            f"'{tag_name}' tag should have form as the first argument, other arguments should be keyword arguments."
+        )
+
+    context_args = tag_args[1:]
+    context_kwargs = tag_kwargs
+
+    nodelist: NodeList = parser.parse(parse_until=["endform_tag"])
+    parser.delete_first_token()
+
+    component_node = FormTagNode(
+        context_args=context_args,
+        context_kwargs=context_kwargs,
+        nodelist=nodelist,
+    )
+
+    return component_node
 
 
 @register.filter
@@ -135,3 +205,13 @@ def optgroups(field):
     attrs = field.build_widget_attrs(attrs)
     values = field.field.widget.format_value(field.value())
     return field.field.widget.optgroups(field.html_name, values, attrs)
+
+
+def safe_resolve(context_item, context):
+    """Resolve FilterExpressions and Variables in context if possible.  Return other items unchanged."""
+
+    return (
+        context_item.resolve(context)
+        if hasattr(context_item, "resolve")
+        else context_item
+    )
