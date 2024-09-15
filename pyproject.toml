@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-formify"
-version = "0.0.6"
+version = "0.0.7"
 description = "Django-Formify seamlessly integrates Tailwind CSS styles into your Django forms for a modern look."
 authors = ["Michael Yin <michaelyin@accordbox.com>"]
 license = "MIT"
