@@ -91,7 +91,7 @@ class FormTagNode(Node):
             key: safe_resolve(kwarg, context)
             for key, kwarg in self.context_kwargs.items()
         }
-        form = resolved_component_args[0]
+        form = resolved_component_args[0] if resolved_component_args else None
         formify_helper = init_formify_helper_for_form(form)
         content = self.nodelist.render(context)
         return formify_helper.render_form_tag(
@@ -121,9 +121,9 @@ def do_form_tag(parser, token):
             f"Internal error: Expected tag_name to be {tag_name}, but it was {tag_args[0].token}"
         )
 
-    if len(tag_args) != 2:
+    if len(tag_args) > 2:
         raise TemplateSyntaxError(
-            f"'{tag_name}' tag should have form as the first argument, other arguments should be keyword arguments."
+            f"'{tag_name}' tag only accepts form as the first argument, other arguments should be keyword arguments."
         )
 
     context_args = tag_args[1:]

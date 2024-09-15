@@ -1,8 +1,28 @@
 # Template Tags
 
+A typical case of using formify in a template is like this:
+
+```html
+{% load formify %}
+
+{% form_tag form action=url %}
+
+  {% csrf_token %}
+
+  {% render_form form %}
+
+  {% render_submit text='Submit' css_class="btn btn-primary" %}
+
+{% endform_tag %}
+```
+
+## form_tag
+
+This tag is to render the form tag, it can help add some attributes to the form tag from the parameters from the template tag.
+
 ## render_form
 
-This tag can render form or formset.
+This tag can render `form` or `formset`.
 
 It will iterate and render all form fields automatically.
 

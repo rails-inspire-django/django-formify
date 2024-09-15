@@ -5,6 +5,7 @@
 Unlike other form rendering packages, below template tags
 
 ```bash
+{% form_tag %}
 {% render_form %}
 {% render_submit %}
 {% render_field %}
@@ -34,6 +35,7 @@ FORMIFY = {
 Leveraging Python OOP, you can override some methods of the formify helper to customize the rendering behavior.
 
 ```bash
+{% form_tag %}               -> formify_helper.render_form_tag
 {% render_form %}            -> formify_helper.render_form
 {% render_submit %}          -> formify_helper.render_submit
 {% render_field %}           -> formify_helper.render_field
