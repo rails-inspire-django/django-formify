@@ -1,6 +1,5 @@
 import copy
 import re
-import warnings
 
 from django.template.base import Template
 from django.template.context import Context
@@ -187,9 +186,12 @@ class FormifyHelper:
         """
         uni_form.html
         """
-        return SafeString(
-            self.render_form_errors(context) + self.render_form_fields(context)
-        )
+        with context.push():
+            context["attrs"] = None
+
+            return SafeString(
+                self.render_form_errors(context) + self.render_form_fields(context)
+            )
 
     def render_field(self, context, field, **kwargs):
         """
@@ -202,6 +204,7 @@ class FormifyHelper:
             setattr(field_formify_helper, key, value)
 
         with context.push():
+            context["attrs"] = None
             context["field"] = field
 
             if field.is_hidden:
@@ -296,14 +299,6 @@ class FormifyHelper:
 
         # TODO
         for attribute_name, attributes in attrs.items():
-            # check type of attributes, if it is not basic type boolen, number, string, ignore it
-            # and print warning
-            if not isinstance(attributes, (bool, int, str, float)):
-                warnings.warn(
-                    f"Attribute {attribute_name} value is not a basic type. Ignoring it.",
-                    stacklevel=1,
-                )
-                continue
             if attribute_name in widget.attrs:
                 # multiple attributes are in a single string, e.g.
                 # "form-control is-invalid"
