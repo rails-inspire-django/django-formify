@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.8
+
+1. Exclude `attrs` from outer context.
+
 ## 0.0.7
 
 1. Add `form_tag` to render form tag
