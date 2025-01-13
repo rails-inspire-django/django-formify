@@ -298,7 +298,7 @@ class FormifyHelper:
         for attribute_name, attributes in attrs.items():
             # check type of attributes, if it is not basic type boolen, number, string, ignore it
             # and print warning
-            if not isinstance(attributes, (bool, int, str)):
+            if not isinstance(attributes, (bool, int, str, float)):
                 warnings.warn(
                     f"Attribute {attribute_name} value is not a basic type. Ignoring it.",
                     stacklevel=1,
