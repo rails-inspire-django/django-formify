@@ -186,9 +186,12 @@ class FormifyHelper:
         """
         uni_form.html
         """
-        return SafeString(
-            self.render_form_errors(context) + self.render_form_fields(context)
-        )
+        with context.push():
+            context["attrs"] = None
+
+            return SafeString(
+                self.render_form_errors(context) + self.render_form_fields(context)
+            )
 
     def render_field(self, context, field, **kwargs):
         """
@@ -201,6 +204,7 @@ class FormifyHelper:
             setattr(field_formify_helper, key, value)
 
         with context.push():
+            context["attrs"] = None
             context["field"] = field
 
             if field.is_hidden:
@@ -268,7 +272,7 @@ class FormifyHelper:
         field = context["field"]
         widget = field.field.widget
 
-        attrs = context.get("attrs", {})
+        attrs = context.get("attrs", None) or {}
         css_class = widget.attrs.get("class", "")
         if "class" not in attrs.keys():
             # if class is not set, then add additional css classes
@@ -296,7 +300,7 @@ class FormifyHelper:
         # TODO
         for attribute_name, attributes in attrs.items():
             if attribute_name in widget.attrs:
-                # multiple attribtes are in a single string, e.g.
+                # multiple attributes are in a single string, e.g.
                 # "form-control is-invalid"
                 for attr in attributes.split():
                     if attr not in widget.attrs[attribute_name].split():
